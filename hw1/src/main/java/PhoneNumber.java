@@ -19,7 +19,6 @@ public class PhoneNumber {
                 System.out.println("Phone number is incorrect.");
             }
         } while (!validNumber);
-
         totalResult = Long.parseLong(inputNumber.replaceAll("[^0-9]", ""));
         for (int i = 1; totalResult > 9; i++) {
             long sumDigits = 0;
@@ -30,7 +29,6 @@ public class PhoneNumber {
             totalResult = sumDigits;
             System.out.println(i + " round of calculation, sum is: " + totalResult);
         }
-
         System.out.print("Final result is: ");
         if (totalResult == 1) {
             System.out.println("One");
