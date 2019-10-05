@@ -18,7 +18,8 @@ public class PhoneNumber {
             } else {
                 System.out.println("Phone number is incorrect.");
             }
-        } while (!validNumber);
+        }
+        while (!validNumber);
         totalResult = Long.parseLong(inputNumber.replaceAll("[^0-9]", ""));
         for (int i = 1; totalResult > 9; i++) {
             long sumDigits = 0;
