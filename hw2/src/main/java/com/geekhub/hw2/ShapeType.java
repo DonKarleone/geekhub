@@ -12,11 +12,6 @@ public enum ShapeType {
         this.stringRepresentation = stringRepresentation;
     }
 
-    @Override
-    public String toString() {
-        return this.stringRepresentation;
-    }
-
     public static ShapeType fromString(String inputString) {
         for (ShapeType acceptableValue : ShapeType.values()) {
             if (acceptableValue.stringRepresentation.equalsIgnoreCase(inputString)) {
