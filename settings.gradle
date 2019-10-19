@@ -1,4 +1,5 @@
 rootProject.name = 'GeekHub2019'
 include 'hw1'
 include 'hw2'
+include 'hw3'
 
