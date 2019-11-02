@@ -70,6 +70,19 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, List<E> elements) {
+        if (elements.size() == 0)
+            return false;
+        if (index >= 0 && index <= size) {
+            if (size == 0) {
+                addAll(elements);
+                return true;
+            }
+            for (int i = 0; i < elements.size(); i++) {
+                add(index, elements.get(i));
+                index++;
+            }
+            return true;
+        }
         return false;
     }
 
