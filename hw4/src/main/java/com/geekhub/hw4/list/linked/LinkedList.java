@@ -34,14 +34,21 @@ public class LinkedList<E> implements List<E> {
             }
             Node<E> node = new Node<>(element, null);
             if (head == tail) {
-                head = node;
-                head.next = tail;
+                if (index == 0) {
+                    head = node;
+                    head.next = tail;
+                } else {
+                    add(element);
+                    return true;
+                }
             } else {
                 Node<E> prevNode = head;
                 Node<E> currNode = head.next;
-                for (int i = 1; i < index; i++) {
+                int counter = 1;
+                while (counter < index) {
                     prevNode = currNode;
                     currNode = currNode.next;
+                    counter++;
                 }
                 if (index == size) {
                     tail.next = node;
@@ -111,9 +118,11 @@ public class LinkedList<E> implements List<E> {
             } else {
                 Node<E> prevNode = head;
                 Node<E> currNode = head.next;
-                for (int i = 1; i < index; i++) {
+                int counter = 1;
+                while (counter < index) {
                     prevNode = currNode;
                     currNode = currNode.next;
+                    counter++;
                 }
                 if (currNode == tail) {
                     tail = prevNode;
@@ -164,8 +173,10 @@ public class LinkedList<E> implements List<E> {
             throw new IndexOutOfBoundsException();
         }
         Node<E> node = head;
-        for (int i = 0; i < index; i++) {
+        int counter = 0;
+        while (counter < index) {
             node = node.next;
+            counter++;
         }
         return node.element;
     }
@@ -183,18 +194,13 @@ public class LinkedList<E> implements List<E> {
     @Override
     public int indexOf(E element) {
         int index = 0;
-        if (element == null) {
-            for (Node<E> node = head; node != null; node = node.next) {
-                if (node.element == null)
-                    return index;
-                index++;
+        Node<E> currNode = head;
+        while (currNode != null) {
+            if (element.equals(currNode.element)) {
+                return index;
             }
-        } else {
-            for (Node<E> node = head; node != null; node = node.next) {
-                if (element.equals(node.element))
-                    return index;
-                index++;
-            }
+            index++;
+            currNode = currNode.next;
         }
         return -1;
     }
