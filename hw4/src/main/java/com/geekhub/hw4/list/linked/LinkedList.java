@@ -32,10 +32,10 @@ public class LinkedList<E> implements List<E> {
                 add(element);
                 return true;
             }
-            Node<E> newNode = new Node<>(element, null);
-                if (head == tail) {
-                    head = newNode;
-                    head.next = tail;
+            Node<E> node = new Node<>(element, null);
+            if (head == tail) {
+                head = node;
+                head.next = tail;
             } else {
                 Node<E> prevNode = head;
                 Node<E> currNode = head.next;
@@ -44,14 +44,14 @@ public class LinkedList<E> implements List<E> {
                     currNode = currNode.next;
                 }
                 if (index == size) {
-                    tail.next = newNode;
-                    tail = newNode;
+                    tail.next = node;
+                    tail = node;
                 } else if (index == 0) {
-                    head = newNode;
-                    newNode.next = prevNode;
+                    head = node;
+                    node.next = prevNode;
                 } else {
-                    prevNode.next = newNode;
-                    newNode.next = currNode;
+                    prevNode.next = node;
+                    node.next = currNode;
                 }
             }
             size++;
@@ -88,10 +88,10 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public boolean clear() {
-        for (Node<E> x = head; x != null; ) {
-            Node<E> next = x.next;
-            x.next = null;
-            x = next;
+        for (Node<E> node = head; node != null; ) {
+            Node<E> next = node.next;
+            node.next = null;
+            node = next;
         }
         head = tail = null;
         size = 0;
@@ -184,14 +184,14 @@ public class LinkedList<E> implements List<E> {
     public int indexOf(E element) {
         int index = 0;
         if (element == null) {
-            for (Node<E> x = head; x != null; x = x.next) {
-                if (x.element == null)
+            for (Node<E> node = head; node != null; node = node.next) {
+                if (node.element == null)
                     return index;
                 index++;
             }
         } else {
-            for (Node<E> x = head; x != null; x = x.next) {
-                if (element.equals(x.element))
+            for (Node<E> node = head; node != null; node = node.next) {
+                if (element.equals(node.element))
                     return index;
                 index++;
             }
@@ -209,16 +209,11 @@ public class LinkedList<E> implements List<E> {
         return new LinkedListIterator<>(head);
     }
 
-    public void print()
-    {
-        Node n = head;
-        while (n != null) {
-            System.out.print(n.element + " ");
-            n = n.next;
+    public void print() {
+        Node node = head;
+        while (node != null) {
+            System.out.print(node.element + " ");
+            node = node.next;
         }
-    }
-
-    private boolean isPositionIndex(int index) {
-        return index >= 0 && index <= size;
     }
 }
