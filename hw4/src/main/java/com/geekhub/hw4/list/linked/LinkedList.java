@@ -84,8 +84,9 @@ public class LinkedList<E> implements List<E> {
                 addAll(elements);
                 return true;
             }
-            for (int i = 0; i < elements.size(); i++) {
-                add(index, elements.get(i));
+            Iterator<E> iterator = elements.iterator();
+            while (iterator.hasNext()) {
+                add(index, iterator.next());
                 index++;
             }
             return true;
