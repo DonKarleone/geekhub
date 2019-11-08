@@ -2,7 +2,7 @@ package com.geekhub.hw5.task1;
 
 import java.util.Scanner;
 
-public class InventoryProducts {
+public class Application {
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
         Inventory inventory = new Inventory();
@@ -11,7 +11,8 @@ public class InventoryProducts {
         inventory.addProduct("Oranges", 32, 20);
         System.out.println("Available products : ");
         inventory.printNamesProducts();
-        int input = 1;
+        String input;
+        boolean exit = false;
         do {
             System.out.println();
             System.out.println("1) Enter a new product ");
@@ -20,24 +21,25 @@ public class InventoryProducts {
             System.out.println("4) Quit");
             System.out.println();
             System.out.print("Enter choice [1-4]: ");
-            input = in.nextInt();
+            input = in.next();
             switch (input) {
-                case 1:
+                case "1":
                     inventory.addProduct();
                     break;
-                case 2:
+                case "2":
                     inventory.printProduct();
                     break;
-                case 3:
+                case "3":
                     inventory.printInventory();
                     break;
-                case 4:
+                case "4":
                     System.out.println("Good bye");
+                    exit = true;
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
         }
-        while (input != 4);
+        while (!exit);
     }
 }
