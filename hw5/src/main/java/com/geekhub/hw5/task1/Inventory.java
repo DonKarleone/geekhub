@@ -36,7 +36,6 @@ class Inventory {
         products.add(newProduct);
     }
 
-
     private Product search(String name) {
         Iterator<Product> iter = products.iterator();
         Product product;
@@ -65,12 +64,11 @@ class Inventory {
     }
 
     void printInventory() {
-        double sum = 0;
 
-        for (Product product : products) {
-            System.out.println(product.toString());
-            sum += product.getPrice() * product.getQuantity();
-        }
+        products.stream().forEach(System.out::println);
+        Double sum = products.stream()
+                .map(Product::getTotal)
+                .reduce((total, total1) -> total + total1).get();
         System.out.println("Sum of all products is: " + sum);
     }
 
@@ -78,5 +76,6 @@ class Inventory {
         for (Product product : products) {
             System.out.print(product.getName() + ", ");
         }
+        System.out.println();
     }
 }

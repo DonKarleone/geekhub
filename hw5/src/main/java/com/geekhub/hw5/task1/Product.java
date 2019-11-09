@@ -15,12 +15,8 @@ class Product {
         return name;
     }
 
-    double getPrice() {
-        return price;
-    }
-
-    double getQuantity() {
-        return quantity;
+    double getTotal () {
+        return price * quantity;
     }
 
     public String toString() {

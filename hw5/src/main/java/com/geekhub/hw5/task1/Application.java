@@ -9,13 +9,13 @@ public class Application {
         inventory.addProduct("Apples", 15, 30);
         inventory.addProduct("Bananas", 28, 15);
         inventory.addProduct("Oranges", 32, 20);
-        System.out.println("Available products : ");
+        System.out.println(" \n Available products : ");
         inventory.printNamesProducts();
         String input;
         boolean exit = false;
         do {
             System.out.println();
-            System.out.println("1) Enter a new product ");
+            System.out.println("1) Add a new product ");
             System.out.println("2) View info product");
             System.out.println("3) Whole price of products ");
             System.out.println("4) Quit");
