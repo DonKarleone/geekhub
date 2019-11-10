@@ -1,7 +1,7 @@
 package com.geekhub.hw5.task1;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Optional;
 
 class Inventory {
     ArrayList<Product> products;
@@ -15,17 +15,11 @@ class Inventory {
         products.add(newProduct);
     }
 
-    Product search(String name) {
-        Iterator<Product> iter = products.iterator();
-        Product product;
-
-        while (iter.hasNext()) {
-            product = iter.next();
-            if (product.getName().equalsIgnoreCase(name)) {
-                return product;
-            }
-        }
-        return null;
+    Product search(String name){
+        Optional<Product> any = products.stream()
+                .filter(product -> product.getName().equalsIgnoreCase(name))
+                .findAny();
+        return any.orElse(null);
     }
 
     double countSum() {
