@@ -3,14 +3,15 @@ package com.geekhub.hw5.task1;
 import java.util.Scanner;
 
 public class Application {
+    private static Scanner in = new Scanner(System.in);
+    private static Inventory inventory = new Inventory();
+
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
-        Inventory inventory = new Inventory();
         inventory.addProduct("Apples", 15, 30);
         inventory.addProduct("Bananas", 28, 15);
         inventory.addProduct("Oranges", 32, 20);
         System.out.println(" \n Available products : ");
-        inventory.printNamesProducts();
+        printNamesProducts();
         String input;
         boolean exit = false;
         do {
@@ -24,13 +25,13 @@ public class Application {
             input = in.next();
             switch (input) {
                 case "1":
-                    inventory.addProduct();
+                    add();
                     break;
                 case "2":
-                    inventory.printProduct();
+                    infoProduct();
                     break;
                 case "3":
-                    inventory.printInventory();
+                    printInventory();
                     break;
                 case "4":
                     System.out.println("Good bye");
@@ -41,5 +42,49 @@ public class Application {
             }
         }
         while (!exit);
+    }
+
+    private static void add() {
+        String name;
+        double price;
+        double quantity;
+        System.out.print("Enter name of new product : ");
+        name = in.next();
+        Product foundProduct = inventory.search(name);
+        if (foundProduct == null) {
+            System.out.print("Enter price for 1kg of " + name + " : ");
+            price = in.nextDouble();
+            System.out.print("Enter quantity of " + name + " : ");
+            quantity = in.nextDouble();
+            inventory.addProduct(name, price, quantity);
+        } else {
+            System.out.println("Product exists");
+        }
+    }
+
+    private static void infoProduct() {
+        String name;
+        Product foundProduct;
+
+        System.out.print("Enter product name: ");
+        name = in.next();
+        foundProduct = inventory.search(name);
+        if (foundProduct == null) {
+            System.out.println("Product not found");
+            return;
+        }
+        System.out.println(foundProduct.toString());
+    }
+
+    private static void printInventory() {
+        inventory.products.stream().forEach(System.out::println);
+        System.out.println("Sum of all products is: " + inventory.countSum());
+    }
+
+    private static void printNamesProducts() {
+        for (Product product : inventory.products) {
+            System.out.print(product.getName() + ", ");
+        }
+        System.out.println();
     }
 }
