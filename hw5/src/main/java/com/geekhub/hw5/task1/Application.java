@@ -50,8 +50,7 @@ public class Application {
         double quantity;
         System.out.print("Enter name of new product : ");
         name = in.next();
-        Product foundProduct = inventory.search(name);
-        if (foundProduct == null) {
+        if (inventory.search(name) == null) {
             System.out.print("Enter price for 1kg of " + name + " : ");
             price = in.nextDouble();
             System.out.print("Enter quantity of " + name + " : ");
@@ -64,16 +63,13 @@ public class Application {
 
     private static void infoProduct() {
         String name;
-        Product foundProduct;
-
         System.out.print("Enter product name: ");
         name = in.next();
-        foundProduct = inventory.search(name);
-        if (foundProduct == null) {
+        if (inventory.search(name) == null) {
             System.out.println("Product not found");
             return;
         }
-        System.out.println(foundProduct.toString());
+        System.out.println(inventory.search(name).toString());
     }
 
     private static void printInventory() {

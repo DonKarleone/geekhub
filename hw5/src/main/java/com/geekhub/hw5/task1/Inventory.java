@@ -16,10 +16,10 @@ class Inventory {
     }
 
     Product search(String name){
-        Optional<Product> any = products.stream()
+        Optional<Product> productExist = products.stream()
                 .filter(product -> product.getName().equalsIgnoreCase(name))
                 .findAny();
-        return any.orElse(null);
+        return productExist.orElse(null);
     }
 
     double countSum() {
