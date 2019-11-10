@@ -2,9 +2,9 @@ package com.geekhub.hw5.task2;
 
 public class User implements Comparable<User> {
     private final String name;
-    private final int age;
+    private final String age;
 
-    User(String name, int age) {
+    public User(String name, String age) {
         this.name = name;
         this.age = age;
     }
@@ -16,7 +16,7 @@ public class User implements Comparable<User> {
         if (result != 0) {
             return result;
         }
-        return Integer.compare(age, o.age);
+        return Integer.compare(Integer.parseInt(age), Integer.parseInt(o.age));
     }
 
     @Override
