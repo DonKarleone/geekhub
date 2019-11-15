@@ -1,11 +1,6 @@
 package com.geekhub.hw5.task3;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Iterator;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -108,11 +103,11 @@ public class CollectionUtils {
 
     public static <E> List<E> distinct(List<E> elements, Supplier<List<E>> listFactory) {
         List<E> newList = listFactory.get();
+        Set<E> hashSet = new HashSet<>();
         for (E e : elements) {
-            if (!newList.contains(e)) {
-                newList.add(e);
-            }
+            hashSet.add(e);
         }
+        newList.addAll(hashSet);
         return newList;
     }
 
