@@ -105,9 +105,10 @@ public class CollectionUtils {
         List<E> newList = listFactory.get();
         Set<E> hashSet = new HashSet<>();
         for (E e : elements) {
-            hashSet.add(e);
+            if (hashSet.add(e)) {
+                newList.add(e);
+            }
         }
-        newList.addAll(hashSet);
         return newList;
     }
 
