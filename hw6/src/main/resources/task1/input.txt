@@ -1,0 +1,5 @@
+This document reflects the Java language coding standards presented in the Java Language
+Specification, from Sun Microsystems. Major contributions are from Peter King, Patrick
+Naughton, Mike DeMoney, Jonni Kanerva, Kathy Walrath, and Scott Hommel.
+For questions concerning adaptation, modification, or redistribution of this document, please
+read our copyright notice.
