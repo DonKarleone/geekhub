@@ -1,0 +1,25 @@
+
+
+
+HW6 - Stream API and Lambda
+
+1. Пройти ці туторіали і зрозуміти все що там написано
+https://winterbe.com/posts/2014/03/16/java-8-tutorial/
+https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/
+https://zeroturnaround.com/rebellabs/java-8-explained-applying-lambdas-to-java-collections/
+https://www.baeldung.com/java-8-collectors
+
+2. Подивитись це відео
+https://www.youtube.com/watch?v=1OpAgZvYXLQ
+
+3. Розібратись з стрім апі та функціональними інтерфейсами.
+4. Розуміти що таке function/bi function, predicate, supplier, consumer, map, filter, reduce, collect. (edited)
+
+https://habr.com/post/346782/ (edited)
+По Stream API
+https://annimon.com/article/2778
+https://habr.com/company/luxoft/blog/270383/
+Книга Шилдт Г. - Java 8. Полное руководство. 9-е издание (2015) стр. 1061 (edited)
+
+https://habr.com/company/golovachcourses/blog/223821/ - Исключения в Java, Часть I (try-catch-finally)
+https://habr.com/company/golovachcourses/blog/225585/ - Исключения в Java, Часть II (checked/unchecked)
