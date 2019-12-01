@@ -9,24 +9,8 @@ public class Application {
 
         File inputFile = new File("hw6/src/main/resources/task1/input.txt");
         File outpuFile = new File("hw6/src/main/resources/task1/output.txt");
-        StringBuilder accumulator = new StringBuilder();
-        StringBuilder resultBuilder = new StringBuilder();
         if (inputFile.exists()) {
-            InputStream in = new FileInputStream(inputFile);
-            int data;
-            while ((data = in.read()) != -1) {
-                if (Character.isLetter((char) data)) {
-                    accumulator.append((char) data);
-                } else {
-                    String word = convertWord(accumulator, MAX_WORD_LENGTH);
-                    accumulator.setLength(0);
-                    resultBuilder.append(word);
-                    resultBuilder.append((char) data);
-                }
-            }
-            String word = convertWord(accumulator, MAX_WORD_LENGTH);
-            resultBuilder.append(word);
-            in.close();
+            StringBuilder resultBuilder = GetConvertedStringFromFile(inputFile, MAX_WORD_LENGTH);
             PutStringBuilderToFile(outpuFile, resultBuilder);
             System.out.println("Input file - " + inputFile.getAbsolutePath());
             System.out.println("Output file - " + outpuFile.getAbsolutePath());
@@ -43,18 +27,41 @@ public class Application {
         return word;
     }
 
-    private static void PutStringBuilderToFile(File outpuFile, StringBuilder stringBuilder) {
-        if (!outpuFile.exists()) {
+    private static void PutStringBuilderToFile(File outputFile, StringBuilder stringBuilder) {
+        if (!outputFile.exists()) {
             try {
-                outpuFile.createNewFile();
-            } catch (Exception e) {
+                outputFile.createNewFile();
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         }
-        try (PrintWriter out = new PrintWriter(outpuFile.getAbsoluteFile())) {
+        try (PrintWriter out = new PrintWriter(outputFile.getAbsoluteFile())) {
             out.print(stringBuilder);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private static StringBuilder GetConvertedStringFromFile(File inputFile, int maxWordLength) {
+        StringBuilder accumulator = new StringBuilder();
+        StringBuilder resultBuilder = new StringBuilder();
+        try (InputStream in = new FileInputStream(inputFile)) {
+            int data;
+            while ((data = in.read()) != -1) {
+                if (Character.isLetter((char) data)) {
+                    accumulator.append((char) data);
+                } else {
+                    String word = convertWord(accumulator, maxWordLength);
+                    accumulator.setLength(0);
+                    resultBuilder.append(word);
+                    resultBuilder.append((char) data);
+                }
+            }
+            String word = convertWord(accumulator, maxWordLength);
+            resultBuilder.append(word);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return resultBuilder;
     }
 }
