@@ -9,14 +9,13 @@ public class Application {
 
         File inputFile = new File("hw6/src/main/resources/task1/input.txt");
         File outpuFile = new File("hw6/src/main/resources/task1/output.txt");
-        if (inputFile.exists()) {
-            StringBuilder resultBuilder = GetConvertedStringFromFile(inputFile, MAX_WORD_LENGTH);
-            PutStringBuilderToFile(outpuFile, resultBuilder);
-            System.out.println("Input file - " + inputFile.getAbsolutePath());
-            System.out.println("Output file - " + outpuFile.getAbsolutePath());
-        } else {
+        if (!inputFile.exists()) {
             System.out.println("Input file - " + inputFile.getAbsolutePath() + " does not exist.");
         }
+        StringBuilder resultBuilder = GetConvertedStringFromFile(inputFile, MAX_WORD_LENGTH);
+        PutStringBuilderToFile(outpuFile, resultBuilder);
+        System.out.println("Input file - " + inputFile.getAbsolutePath());
+        System.out.println("Output file - " + outpuFile.getAbsolutePath());
     }
 
     private static String convertWord(StringBuilder acc, int maxWordLength) {
