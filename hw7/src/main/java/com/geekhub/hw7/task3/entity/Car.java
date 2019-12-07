@@ -1,13 +1,13 @@
 package com.geekhub.hw7.task3.entity;
 
-public class A {
+public class Car {
     private int maxCount;
     private String model;
     private String type;
     private String color;
     private int maxSpeed;
 
-    public A(int maxCount, String model, String type, String color, int maxSpeed) {
+    public Car(int maxCount, String model, String type, String color, int maxSpeed) {
         this.maxCount = maxCount;
         this.model = model;
         this.type = type;

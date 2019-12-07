@@ -5,21 +5,17 @@ import com.geekhub.hw7.task2.entities.B;
 import com.geekhub.hw7.task2.entities.C;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class CloneCreator {
-    private static void getClassInformation(Object object) {
+    private static void getClassInformation(Object object) throws IllegalAccessException {
         if (object != null) {
             System.out.println("Class name : " + object.getClass().getName());
             System.out.println("Superclass : " + object.getClass().getSuperclass().getName());
             for (Field x : object.getClass().getDeclaredFields()) {
                 x.setAccessible(true);
-                try {
-                    System.out.println(x.getName() + ": " + x.get(object));
-                } catch (IllegalAccessException e) {
-                    System.out.println("Incorrect object");
-                    break;
-                }
+                System.out.println(x.getName() + ": " + x.get(object));
                 x.setAccessible(false);
             }
             System.out.println("Methods :");
@@ -32,25 +28,20 @@ public class CloneCreator {
         }
     }
 
-    private static Object copyClass(Object object) {
-        try {
-            Object copy = object.getClass().getConstructor().newInstance();
-            for (Field field : object.getClass().getDeclaredFields()) {
-                field.setAccessible(true);
-                Field copyField = copy.getClass().getDeclaredField(field.getName());
-                copyField.setAccessible(true);
-                copyField.set(copy, field.get(object));
-                field.setAccessible(false);
-                copyField.setAccessible(false);
-            }
-            return copy;
-        } catch (Exception e) {
-            System.out.println("Wrong object");
-            return null;
+    private static Object copyClass(Object object) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
+        Object copy = object.getClass().getConstructor().newInstance();
+        for (Field field : object.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            Field copyField = copy.getClass().getDeclaredField(field.getName());
+            copyField.setAccessible(true);
+            copyField.set(copy, field.get(object));
+            field.setAccessible(false);
+            copyField.setAccessible(false);
         }
+        return copy;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         A a = new A();
         a.setParametrA(303);
         B b = new B();

@@ -8,21 +8,16 @@ import java.lang.reflect.Field;
 
 public class BeanRepresenter {
 
-    private static void print(Object object) {
+    private static void print(Object object) throws IllegalAccessException {
         System.out.println("Class = " + object.getClass().getName());
         for (Field x : object.getClass().getDeclaredFields()) {
             x.setAccessible(true);
-            try {
-                System.out.println(x.getName() + ": " + x.get(object));
-            } catch (IllegalAccessException e) {
-                System.out.println("Wrong object");
-                break;
-            }
+            System.out.println(x.getName() + ": " + x.get(object));
             x.setAccessible(false);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalAccessException {
         Cat cat = new Cat("Black", 3, 4, 35);
         Car car = new Car("black", 190, "Sedan", "RX-7");
         Human human = new Human(180, "male", 22, 75);
@@ -31,6 +26,5 @@ public class BeanRepresenter {
         print(car);
         System.out.println();
         print(human);
-
     }
 }
