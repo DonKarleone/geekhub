@@ -6,17 +6,12 @@ import com.geekhub.hw8.task2.storage.DatabaseStorage;
 import com.geekhub.hw8.task2.storage.Storage;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
 
 public class Test {
-    private static final String DATABASE = "jdbc:postgresql://localhost:5433/postgres";
-    private static final String LOGIN = "postgres";
-    private static final String PASSWORD = "postgres";
 
     public static void main(String[] args) throws Exception {
-        Connection connection = createConnection(LOGIN, PASSWORD, DATABASE);
-
+        Connection connection = DataSource.getConnection();
         Storage storage = new DatabaseStorage(connection);
         List<Cat> cats = storage.list(Cat.class);
         for (Cat cat : cats) {
@@ -58,9 +53,5 @@ public class Test {
         if (user3 != null) throw new Exception("User should be deleted!");
 
         connection.close();
-    }
-
-    private static Connection createConnection(String login, String password, String dbName) throws Exception {
-            return DriverManager.getConnection(dbName, login, password);
     }
 }

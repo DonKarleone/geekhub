@@ -1,7 +1,9 @@
 package com.geekhub.hw8.task2.objects;
 
+import java.time.LocalDate;
 import java.util.Date;
 
+@Users
 public class User extends Entity {
     private String name;
     private Integer age;
@@ -9,10 +11,10 @@ public class User extends Entity {
     private Double balance;
 
     @Ignore
-    private Date creationDate;
+    private LocalDate creationDate;
 
     public User() {
-        this.creationDate = new Date();
+        this.creationDate = LocalDate.now();
     }
 
     public String getName() {
@@ -47,11 +49,11 @@ public class User extends Entity {
         this.balance = balance;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 }
