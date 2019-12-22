@@ -2,6 +2,7 @@ package com.geekhub.hw8.task2.storage;
 
 import com.geekhub.hw8.task2.objects.Entity;
 import com.geekhub.hw8.task2.objects.Ignore;
+import com.geekhub.hw8.task2.objects.Users;
 
 import java.lang.reflect.Field;
 import java.sql.*;
@@ -24,7 +25,12 @@ public class DatabaseStorage implements Storage {
     @Override
     public <T extends Entity> T get(Class<T> clazz, Integer id) throws Exception {
         //this method is fully implemented, no need to do anything, it's just an example
-        String sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\" WHERE id = " + id;
+        String sql;
+        if (clazz.isAnnotationPresent(Users.class)) {
+            sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\" WHERE id = " + id;
+        } else {
+            sql = "SELECT * FROM " + clazz.getSimpleName().toLowerCase() + " WHERE id = " + id;
+        }
         try (Statement statement = connection.createStatement()) {
             List<T> result = extractResult(clazz, statement.executeQuery(sql));
             return result.isEmpty() ? null : result.get(0);
@@ -33,7 +39,12 @@ public class DatabaseStorage implements Storage {
 
     @Override
     public <T extends Entity> List<T> list(Class<T> clazz) throws Exception {
-        String sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\"";
+        String sql;
+        if (clazz.isAnnotationPresent(Users.class)) {
+            sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\"";
+        } else {
+            sql = "SELECT * FROM " + clazz.getSimpleName().toLowerCase();
+        }
         try (Statement statement = connection.createStatement()) {
             return extractResult(clazz, statement.executeQuery(sql));
         }
@@ -44,7 +55,12 @@ public class DatabaseStorage implements Storage {
         if (entity.isNew()) {
             return true;
         }
-        String sql = "DELETE FROM \"" + entity.getClass().getSimpleName().toLowerCase() + "\" WHERE id = ?";
+        String sql;
+        if (entity.getClass().isAnnotationPresent(Users.class)) {
+            sql = "DELETE FROM \"" + entity.getClass().getSimpleName().toLowerCase() + "\" WHERE id = ?";
+        } else {
+            sql = "DELETE FROM " + entity.getClass().getSimpleName().toLowerCase() + " WHERE id = ?";
+        }
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, entity.getId());
             return statement.executeUpdate() > 0;
