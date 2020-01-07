@@ -1,0 +1,5 @@
+https://www.apple.com : 4fd013d37a57705d9c02df59f312110d 
+https://www.facebook.com : 386c428201a7b700136835d4b994eb2d 
+https://habr.com : 85b7ddb52f90dba2d293437864f9f3da 
+https://javaworld.com : 2541415c6b7a6dcef2eeb0a24f0cdf44 
+https://cnn.com : 12ddaaa5afc3b6d0bc7272335aa13070 

@@ -9,26 +9,24 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class MD5Thread implements Runnable {
-    private String links;
+    private String link;
     private String outputFile;
 
-    public MD5Thread(String inputFile, String outputFile) {
-        this.links = inputFile;
+    public MD5Thread(String link, String outputFile) {
+        this.link = link;
         this.outputFile = outputFile;
     }
 
-    private void addIntoMD5File(URL url, String md5) {
+    private void addIntoMD5File(URL url, String md5) throws IOException {
         try (FileWriter fileWriter = new FileWriter(outputFile, true)) {
             fileWriter.write(url.toString() + " : " + md5 + " \n");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public void run() {
         try {
-            URL url = new URL(links);
+            URL url = new URL(link);
             Object content = url.getContent();
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             byte[] digest = messageDigest.digest(content.toString().getBytes());
