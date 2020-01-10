@@ -4,15 +4,15 @@ import com.geekhub.hw8.task2.objects.Cat;
 import com.geekhub.hw8.task2.objects.User;
 import com.geekhub.hw8.task2.storage.DatabaseStorage;
 import com.geekhub.hw8.task2.storage.Storage;
+import com.zaxxer.hikari.HikariDataSource;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class Test {
 
     public static void main(String[] args) throws Exception {
-        Connection connection = DataSource.getConnection();
-        Storage storage = new DatabaseStorage(connection);
+        HikariDataSource hikariDataSource = createHikariDataSource("postgres", "postgres", "postgres");
+        Storage storage = new DatabaseStorage(hikariDataSource.getConnection());
         List<Cat> cats = storage.list(Cat.class);
         for (Cat cat : cats) {
             storage.delete(cat);
@@ -20,7 +20,7 @@ public class Test {
         cats = storage.list(Cat.class);
         if (!cats.isEmpty()) throw new Exception("Cats should not be in database!");
 
-        for(int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 20; i++) {
             Cat cat = new Cat();
             cat.setName("cat" + i);
             cat.setAge(i);
@@ -52,6 +52,14 @@ public class Test {
 
         if (user3 != null) throw new Exception("User should be deleted!");
 
-        connection.close();
+        hikariDataSource.close();
+    }
+
+    private static HikariDataSource createHikariDataSource(String login, String password, String dbName) {
+        HikariDataSource ds = new HikariDataSource();
+        ds.setJdbcUrl("jdbc:postgresql://localhost:5433/" + dbName);
+        ds.setUsername(login);
+        ds.setPassword(password);
+        return ds;
     }
 }

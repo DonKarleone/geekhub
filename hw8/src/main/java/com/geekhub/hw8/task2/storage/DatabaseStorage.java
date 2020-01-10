@@ -26,11 +26,7 @@ public class DatabaseStorage implements Storage {
     public <T extends Entity> T get(Class<T> clazz, Integer id) throws Exception {
         //this method is fully implemented, no need to do anything, it's just an example
         String sql;
-        if (clazz.isAnnotationPresent(Users.class)) {
-            sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\" WHERE id = " + id;
-        } else {
-            sql = "SELECT * FROM " + clazz.getSimpleName().toLowerCase() + " WHERE id = " + id;
-        }
+        sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\" WHERE id = " + id;
         try (Statement statement = connection.createStatement()) {
             List<T> result = extractResult(clazz, statement.executeQuery(sql));
             return result.isEmpty() ? null : result.get(0);
@@ -40,11 +36,7 @@ public class DatabaseStorage implements Storage {
     @Override
     public <T extends Entity> List<T> list(Class<T> clazz) throws Exception {
         String sql;
-        if (clazz.isAnnotationPresent(Users.class)) {
-            sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\"";
-        } else {
-            sql = "SELECT * FROM " + clazz.getSimpleName().toLowerCase();
-        }
+        sql = "SELECT * FROM \"" + clazz.getSimpleName().toLowerCase() + "\"";
         try (Statement statement = connection.createStatement()) {
             return extractResult(clazz, statement.executeQuery(sql));
         }
@@ -56,11 +48,7 @@ public class DatabaseStorage implements Storage {
             return true;
         }
         String sql;
-        if (entity.getClass().isAnnotationPresent(Users.class)) {
-            sql = "DELETE FROM \"" + entity.getClass().getSimpleName().toLowerCase() + "\" WHERE id = ?";
-        } else {
-            sql = "DELETE FROM " + entity.getClass().getSimpleName().toLowerCase() + " WHERE id = ?";
-        }
+        sql = "DELETE FROM \"" + entity.getClass().getSimpleName().toLowerCase() + "\" WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, entity.getId());
             return statement.executeUpdate() > 0;
@@ -69,42 +57,54 @@ public class DatabaseStorage implements Storage {
 
     @Override
     public <T extends Entity> void save(T entity) throws Exception {
+        if (entity.isNew()) {
+            saveNewObject(entity);
+        }
+        updateObject(entity);
+    }
+
+    private <T extends Entity> void saveNewObject(T entity) throws Exception {
         Map<String, Object> preparedEntity = prepareEntity(entity);
         String tableName = entity.getClass().getSimpleName().toLowerCase();
         List<String> columnNames = new ArrayList<>(preparedEntity.keySet());
-        columnNames.remove("id");
         StringBuilder sqlStringBuilder = new StringBuilder();
-        if (entity.isNew()) {
-            sqlStringBuilder.append("INSERT INTO \"");
-            sqlStringBuilder.append(tableName);
-            sqlStringBuilder.append("\"(\"");
-            sqlStringBuilder.append(String.join("\", \"", columnNames));
-            sqlStringBuilder.append("\") VALUES (");
-            sqlStringBuilder.append(String.join(", ", Collections.nCopies(columnNames.size(), "?")));
-            sqlStringBuilder.append(");");
-        } else {
-            sqlStringBuilder.append("UPDATE \"");
-            sqlStringBuilder.append(tableName);
-            sqlStringBuilder.append("\" SET ");
-            sqlStringBuilder.append(String.join(" = ?, ", columnNames));
-            sqlStringBuilder.append(" = ? WHERE id = ?;");
-        }
+        sqlStringBuilder.append("INSERT INTO \"");
+        sqlStringBuilder.append(tableName);
+        sqlStringBuilder.append("\"(\"");
+        sqlStringBuilder.append(String.join("\", \"", columnNames));
+        sqlStringBuilder.append("\") VALUES (");
+        sqlStringBuilder.append(String.join(", ", Collections.nCopies(columnNames.size(), "?")));
+        sqlStringBuilder.append(");");
         String sql = sqlStringBuilder.toString();
-
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (int i = 0; i < columnNames.size(); i++) {
                 preparedStatement.setObject(1 + i, preparedEntity.get(columnNames.get(i)));
             }
-            if (entity.isNew()) {
-                preparedStatement.executeUpdate();
-                ResultSet resultSet = preparedStatement.getGeneratedKeys();
-                if (resultSet.next()) {
-                    entity.setId(resultSet.getInt(1));
-                }
-            } else {
-                preparedStatement.setInt(columnNames.size() + 1, entity.getId());
-                preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                entity.setId(resultSet.getInt(1));
             }
+        }
+    }
+
+    private <T extends Entity> void updateObject(T entity) throws Exception {
+        Map<String, Object> preparedEntity = prepareEntity(entity);
+        String tableName = entity.getClass().getSimpleName().toLowerCase();
+        List<String> columnNames = new ArrayList<>(preparedEntity.keySet());
+        StringBuilder sqlStringBuilder = new StringBuilder();
+        sqlStringBuilder.append("UPDATE \"");
+        sqlStringBuilder.append(tableName);
+        sqlStringBuilder.append("\" SET ");
+        sqlStringBuilder.append(String.join(" = ?, ", columnNames));
+        sqlStringBuilder.append(" = ? WHERE id = ?;");
+        String sql = sqlStringBuilder.toString();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            for (int i = 0; i < columnNames.size(); i++) {
+                preparedStatement.setObject(1 + i, preparedEntity.get(columnNames.get(i)));
+            }
+            preparedStatement.setInt(columnNames.size() + 1, entity.getId());
+            preparedStatement.executeUpdate();
         }
     }
 
