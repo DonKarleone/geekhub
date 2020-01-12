@@ -1,53 +1,28 @@
 package com.geekhub.hw9.task1.thread;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.Callable;
 
-public class MD5Thread implements Runnable {
+public class MD5Thread implements Callable {
     private String link;
-    private String outputFile;
 
-    public MD5Thread(String link, String outputFile) {
+    public MD5Thread(String link) {
         this.link = link;
-        this.outputFile = outputFile;
-    }
-
-    private void addIntoMD5File(URL url, String md5) throws IOException {
-        try (FileWriter fileWriter = new FileWriter(outputFile, true)) {
-            fileWriter.write(url.toString() + " : " + md5 + " \n");
-        }
     }
 
     @Override
-    public void run() {
-        try {
-            URL url = new URL(link);
-            Object content = url.getContent();
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte[] digest = messageDigest.digest(content.toString().getBytes());
-            StringBuilder stringBuilder = new StringBuilder();
-            for (byte b : digest) {
-                stringBuilder.append(String.format("%02x", b));
-            }
-            addIntoMD5File(url, stringBuilder.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+    public String call() throws IOException, NoSuchAlgorithmException {
+        StringBuilder stringBuilder = new StringBuilder();
+        URL url = new URL(link);
+        Object content = url.getContent();
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        byte[] digest = messageDigest.digest(content.toString().getBytes());
+        for (byte b : digest) {
+            stringBuilder.append(String.format("%02x", b));
         }
-    }
-
-    public static void deleteOutputFile (String outputFile){
-        File outFile = new File(outputFile);
-        if (outFile.exists()) {
-            outFile.delete();
-        }
+        return url.toString() + " : " + stringBuilder.toString() + " \n";
     }
 }
