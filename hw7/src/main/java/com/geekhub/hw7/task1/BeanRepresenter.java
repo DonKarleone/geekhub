@@ -7,7 +7,6 @@ import com.geekhub.hw7.task1.entities.Human;
 import java.lang.reflect.Field;
 
 public class BeanRepresenter {
-
     private static void print(Object object) throws IllegalAccessException {
         System.out.println("Class = " + object.getClass().getName());
         for (Field x : object.getClass().getDeclaredFields()) {

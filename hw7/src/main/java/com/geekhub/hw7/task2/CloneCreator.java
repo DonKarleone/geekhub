@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class CloneCreator {
-    private static void getClassInformation(Object object) throws IllegalAccessException {
+        private static void getClassInformation(Object object) throws IllegalAccessException {
         if (object != null) {
             System.out.println("Class name : " + object.getClass().getName());
             System.out.println("Superclass : " + object.getClass().getSuperclass().getName());
@@ -63,6 +63,5 @@ public class CloneCreator {
         System.out.println("copy");
         getClassInformation(copyC);
         System.out.println("-----------------------------------------------------------------------------------------");
-
     }
 }
