@@ -1,4 +1,4 @@
-package com.geekhub.hw10;
+package com.geekhub.hw10.task1;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ListIterator;
 
-import static com.geekhub.hw10.FeedbackServlet.*;
+import static com.geekhub.hw10.task1.GuestBookServlet.*;
 
 public class HtmlForm {
 
@@ -16,7 +16,7 @@ public class HtmlForm {
     }
 
     public static void printForm(PrintWriter out) {
-        out.println("<form action=\"/feedback\" method=\"post\">");
+        out.println("<form action=\"/guestbook\" method=\"post\">");
         out.println("Name: <input name=\"name\"/>");
         out.println("<br><br>");
         out.println("Text: <textarea name=\"text\"/></textarea>");

@@ -1,4 +1,4 @@
-package com.geekhub.hw10;
+package com.geekhub.hw10.task1;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedbackServlet extends javax.servlet.http.HttpServlet {
+public class GuestBookServlet extends javax.servlet.http.HttpServlet {
 
     public static List guestbook = new ArrayList<Feedback>();
 

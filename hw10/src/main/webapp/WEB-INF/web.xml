@@ -4,15 +4,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <!-- -
         <servlet>
-            <servlet-name>FeedbackServlet</servlet-name>
-            <servlet-class>com.geekhub.hw10.task1.FeedbackServlet</servlet-class>
+            <servlet-name>GuestBookServlet</servlet-name>
+            <servlet-class>com.geekhub.hw10.task1.GuestBookServlet</servlet-class>
         </servlet>
 
         <servlet-mapping>
-            <servlet-name>FeedbackServlet</servlet-name>
-            <url-pattern>/feedback</url-pattern>
+            <servlet-name>GuestBookServlet</servlet-name>
+            <url-pattern>/guestbook</url-pattern>
         </servlet-mapping>
-<!- -->
     </web-app>

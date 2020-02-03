@@ -1,4 +1,4 @@
-package com.geekhub.hw10;
+package com.geekhub.hw10.task1;
 
 import java.time.LocalDateTime;
 
