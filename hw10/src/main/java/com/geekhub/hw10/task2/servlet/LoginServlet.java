@@ -1,4 +1,6 @@
-package com.geekhub.hw10.task2;
+package com.geekhub.hw10.task2.servlet;
+
+import com.geekhub.hw10.task2.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

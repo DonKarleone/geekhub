@@ -1,19 +1,19 @@
-package com.geekhub.hw10.task2;
+package com.geekhub.hw10.task2.model;
 
 import java.time.LocalDateTime;
 
 public class Feedback {
 
-    private String name;
-    private String text;
-    private LocalDateTime date;
-    private Integer rank;
+    public String name;
+    public String text;
+    public LocalDateTime date;
+    public Integer rank;
 
     public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -21,15 +21,15 @@ public class Feedback {
         return text;
     }
 
-    void setText(String text) {
+    public void setText(String text) {
         this.text = text;
     }
 
-    LocalDateTime getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    void setDate(LocalDateTime date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -37,7 +37,7 @@ public class Feedback {
         return rank;
     }
 
-    void setRank(Integer rank) {
+    public void setRank(Integer rank) {
         this.rank = rank;
     }
 }

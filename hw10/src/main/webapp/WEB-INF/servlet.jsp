@@ -29,7 +29,7 @@
         <th>Feedback</th>
         <th>Rank</th>
     </tr>
-    <c:forEach var="feedback" items="${feedbackList}">
+    <c:forEach var="feedback" items="${feedbackPage.items}">
         <tr>
             <td>${feedback.name}</td>
             <td>${feedback.text}</td>
@@ -37,5 +37,15 @@
     </tr>
 </c:forEach>
 </table>
+<c:forEach begin="1" end="${totalPages}" var="i">
+    <c:choose>
+        <c:when test="${currentPage eq i}">
+            <span><c:out value='${i}'/> </span>
+        </c:when>
+        <c:otherwise>
+            <span><a href="/feedback?page=<c:out value='${i}'/>"><c:out value='${i}'/></a> </span>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
 </body>
 </html>

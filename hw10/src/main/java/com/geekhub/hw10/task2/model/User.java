@@ -1,15 +1,15 @@
-package com.geekhub.hw10.task2;
+package com.geekhub.hw10.task2.model;
 
 public class User {
     private String name;
     private String password;
 
-    User(String name, String password) {
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
@@ -17,7 +17,7 @@ public class User {
         this.name = name;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 

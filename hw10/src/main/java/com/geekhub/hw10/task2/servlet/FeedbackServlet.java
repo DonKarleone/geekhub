@@ -1,4 +1,9 @@
-package com.geekhub.hw10.task2;
+package com.geekhub.hw10.task2.servlet;
+
+import com.geekhub.hw10.task2.service.FeedbackService;
+import com.geekhub.hw10.task2.model.Feedback;
+import com.geekhub.hw10.task2.model.Page;
+import com.geekhub.hw10.task2.model.PageRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @WebServlet("/feedback")
 public class FeedbackServlet extends HttpServlet {
+    private static final int PAGE_SIZE = 5;
     private FeedbackService feedbackService = new FeedbackService();
 
     @Override
@@ -19,8 +24,17 @@ public class FeedbackServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String name = (String) session.getAttribute("userName");
         req.setAttribute("name", name);
-        List<Feedback> feedbacks = feedbackService.getFeedbacks();
-        req.setAttribute("feedbackList", feedbacks);
+        PageRequest pageRequest = new PageRequest();
+        pageRequest.setPerPage(PAGE_SIZE);
+        if (req.getParameter("page") != null) {
+            pageRequest.setPage(Integer.parseInt(req.getParameter("page")));
+        } else {
+            pageRequest.setPage(1);
+        }
+        Page<Feedback> feedbackPage = feedbackService.getFeedbacks(pageRequest);
+        req.setAttribute("feedbackPage", feedbackPage);
+        req.setAttribute("totalPages", feedbackPage.getTotalCountOfPages());
+        req.setAttribute("currentPage", feedbackPage.getPage());
         req.getRequestDispatcher("/WEB-INF/servlet.jsp").forward(req, resp);
     }
 

@@ -1,4 +1,4 @@
-package com.geekhub.hw10.task2;
+package com.geekhub.hw10.task2.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

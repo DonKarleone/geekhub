@@ -1,10 +1,12 @@
-package com.geekhub.hw10.task2;
+package com.geekhub.hw10.task2.service;
+
+import com.geekhub.hw10.task2.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class UserService {
-    private static final Map<String, User> users = new HashMap<String, User>();
+public class UserService {
+    private static final Map<String, User> users = new HashMap<>();
 
     static {
         initUsers();
@@ -19,7 +21,7 @@ class UserService {
         users.put(user3.getName(), user3);
     }
 
-    static String findUser(String userName, String password) {
+    public static String findUser(String userName, String password) {
         User user = users.get(userName);
         if (user != null && user.getPassword().equals(password)) {
             return userName;
