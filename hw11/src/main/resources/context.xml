@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean class="com.geekhub.hw11.xmlconfig.beans.Engine" id="engine">
+        <constructor-arg value="3"/>
+    </bean>
+
+    <bean class="com.geekhub.hw11.xmlconfig.beans.SummerTyre" id="summerTyre">
+        <constructor-arg value="18"/>
+        <constructor-arg value="GoodYear"/>
+    </bean>
+
+    <bean class="com.geekhub.hw11.xmlconfig.beans.Wheel" id="wheel" scope="prototype">
+        <constructor-arg ref="summerTyre"/>
+    </bean>
+
+    <bean class="com.geekhub.hw11.xmlconfig.beans.Car" id="car">
+        <constructor-arg ref="engine"/>
+        <constructor-arg>
+            <list>
+                <ref bean="wheel"/>
+                <ref bean="wheel"/>
+                <ref bean="wheel"/>
+                <ref bean="wheel"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>
